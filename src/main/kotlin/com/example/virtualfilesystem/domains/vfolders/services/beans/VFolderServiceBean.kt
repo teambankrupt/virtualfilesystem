@@ -44,7 +44,7 @@ class VFolderServiceBean @Autowired constructor(
 
     override fun validate(entity: VFolder) {
         if (entity.id != null) { // validation during update
-            if (entity.id == entity.parent?.id) {
+            if (entity.id == entity.parent.orElse(null)?.id) {
                 ExceptionUtil.wtf("Have you seen \"Back to the future\" movie? What if Marty would get enticed by his own mommy and tried to conceive himself? Well, people would say, this could only mean a catastrophe.")
             }
         }

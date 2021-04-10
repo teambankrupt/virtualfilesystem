@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class VFolderMapper @Autowired constructor(
-        private val vFolderRepository: VFolderRepository
+    private val vFolderRepository: VFolderRepository
 ) : BaseMapper<VFolder, VFolderDto> {
 
     override fun map(entity: VFolder): VFolderDto {
@@ -24,7 +24,7 @@ class VFolderMapper @Autowired constructor(
         dto.thumbnail = entity.thumbnail
         dto.path = entity.path
         dto.accentColor = entity.accentColor
-        dto.parentId = entity.parent?.id
+        dto.parentId = entity.parentId.orElse(null)
         dto.rootId = entity.getRootId()
 
         return dto
@@ -37,7 +37,9 @@ class VFolderMapper @Autowired constructor(
         entity.description = dto.description
         entity.thumbnail = dto.thumbnail
         entity.accentColor = dto.accentColor
-        entity.parent = dto.parentId?.let { this.vFolderRepository.find(it).orElseThrow { ExceptionUtil.notFound("VFolder", dto.id!!) } }
+        entity.setParent(dto.parentId?.let {
+            this.vFolderRepository.find(it).orElseThrow { ExceptionUtil.notFound("VFolder", dto.id!!) }
+        })
 
         return entity
     }

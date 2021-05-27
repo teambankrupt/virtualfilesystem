@@ -1,6 +1,7 @@
 package com.example.virtualfilesystem.domains.vfolders.models.entities
 
 import com.example.coreweb.domains.base.entities.BaseTreeEntity
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -25,6 +26,7 @@ class VFolder : BaseTreeEntity<VFolder>() {
         return this.parent.orElse(null)?.getThumbnailElseParent()
     }
 
+    @JsonIgnore
     override fun getImpl(): VFolder {
         return this
     }

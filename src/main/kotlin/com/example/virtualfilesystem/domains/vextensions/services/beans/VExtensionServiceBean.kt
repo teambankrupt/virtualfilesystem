@@ -46,6 +46,7 @@ class VExtensionServiceBean @Autowired constructor(
             val entity = this.find(id).orElseThrow { ExceptionUtil.notFound("VExtension", id) }
             entity.isDeleted = true
             this.vExtensionRepository.save(entity)
+            return
         }
         this.vExtensionRepository.deleteById(id)
     }

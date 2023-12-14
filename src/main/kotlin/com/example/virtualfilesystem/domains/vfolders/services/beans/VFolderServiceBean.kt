@@ -38,6 +38,7 @@ class VFolderServiceBean @Autowired constructor(
             val entity = this.find(id).orElseThrow { ExceptionUtil.notFound("VFolder", id) }
             entity.isDeleted = true
             this.vFolderRepository.save(entity)
+            return
         }
         this.vFolderRepository.deleteById(id)
     }
